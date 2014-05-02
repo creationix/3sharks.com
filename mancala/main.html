@@ -1,0 +1,276 @@
+<html>
+</head>
+<title>Mancala: By Tim Caswell</title>
+<MAP NAME="map">
+<!-- onMouseover="itisin" onMouseout="itisout" -->
+<!--
+-->
+
+<AREA SHAPE="CIRCLE" COORDS="164,65,43" onmouseover="choose(12)" onmouseout="hide()" onclick="play(12)">
+<AREA SHAPE="CIRCLE" COORDS="256,65,43" onmouseover="choose(11)" onmouseout="hide()" onclick="play(11)">
+<AREA SHAPE="CIRCLE" COORDS="349,65,43" onmouseover="choose(10)" onmouseout="hide()" onclick="play(10)">
+<AREA SHAPE="CIRCLE" COORDS="442,65,43" onmouseover="choose(9)" onmouseout="hide()" onclick="play(9)">
+<AREA SHAPE="CIRCLE" COORDS="534,65,43" onmouseover="choose(8)" onmouseout="hide()" onclick="play(8)">
+<AREA SHAPE="CIRCLE" COORDS="627,65,43" onmouseover="choose(7)" onmouseout="hide()" onclick="play(7)">
+<AREA SHAPE="CIRCLE" COORDS="164,200,43" onmouseover="choose(0)" onmouseout="hide()" onclick="play(0)">
+<AREA SHAPE="CIRCLE" COORDS="256,200,43" onmouseover="choose(1)" onmouseout="hide()" onclick="play(1)">
+<AREA SHAPE="CIRCLE" COORDS="349,200,43" onmouseover="choose(2)" onmouseout="hide()" onclick="play(2)">
+<AREA SHAPE="CIRCLE" COORDS="442,200,43" onmouseover="choose(3)" onmouseout="hide()" onclick="play(3)">
+<AREA SHAPE="CIRCLE" COORDS="534,200,43" onmouseover="choose(4)" onmouseout="hide()" onclick="play(4)">
+<AREA SHAPE="CIRCLE" COORDS="627,200,43" onmouseover="choose(5)" onmouseout="hide()" onclick="play(5)">
+<AREA SHAPE="POLY" COORDS="681,219,680,45,698,20,740,18,764,43,763,222,742,243,704,241,703,239" onmouseover="choose(6)">
+<AREA SHAPE="POLY" COORDS="110,46,112,219,87,243,54,243,28,216,28,46,47,21,88,20" onmouseover="choose(13)">
+</MAP>
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var turn = 0
+var map = new Array(14)
+var systm="C"
+var spCOUNT = 0
+var bpos = new Array(49)
+var offX = new Array(17)
+var offY = new Array(17)
+offX[0]=0; offY[0]=0
+offX[1]=25; offY[1]=0
+offX[2]=0; offY[2]=25
+offX[3]=-25; offY[3]=0
+offX[4]=0; offY[4]=-25
+offX[5]=18; offY[5]=18
+offX[6]=-18; offY[6]=18
+offX[7]=18; offY[7]=-18
+offX[8]=-18; offY[8]=-18
+offX[9]=14; offY[9]=4
+offX[10]=-4; offY[10]=14
+offX[11]=4; offY[11]=-14
+offX[12]=-14; offY[12]=-4
+offX[13]=4; offY[13]=14
+offX[14]=14; offY[14]=-4
+offX[15]=14; offY[15]=-4
+offX[16]=-4; offY[16]=-14
+
+//choose
+function choose(hole)
+{
+y=217-(250-70)
+ if (hole<6)
+ {
+  x=hole*93+132
+  y=y+135
+  if (turn==1 || map[hole]==0)
+   y=500
+ }
+ else
+ {
+  x=(12-hole)*93+128 
+  if (turn==0 || map[hole]==0)
+   y=500
+ }
+ if(hole==6 || hole==13)
+  y=500
+ move(48,x,y)
+
+}
+function hide()
+{
+ 
+   move(48,100,500)
+}
+
+function transfer(start,end)
+{
+ b=beadat(start)
+  
+ y=70
+ if (end<6)
+ {
+  x=end*93+158
+  y=y+132
+ }
+ else{ x=(12-end)*93+158}
+
+ x=x+offX[map[end]]
+ y=y+offY[map[end]]
+ if (end==6)
+ {
+  x=(138-93+93*7)+20*(map[end]%3)
+  y=60+6*map[end]
+ }
+ if (end==13)
+ {
+  x=138-93+20*(map[end]%3)
+  y=60+6*map[end]
+ }
+ map[start]=map[start]-1
+ map[end]=map[end]+1
+ move(b,x,y)
+ bpos[b]=end
+
+}
+
+function beadat(hole)
+{
+ for(a=0;a<48;a++)
+  if(bpos[a]==hole)
+   return a
+}
+
+//play
+function play(hole)
+{
+ if(hole<6) 
+  {skip=13;home=6}
+ else 
+  {skip=6;home=13}
+
+ if (home==turn*7+6 && map[hole]>0)
+ {
+  turn=(turn+1)%2
+  h=hole
+  m=map[h]
+  if (m>0)
+  {  
+   s=h
+   while(m>0)
+   {
+    m--
+    h++
+    if (h==skip) 
+     h++
+    if(h>13) 
+     h=0
+    transfer(s,h)
+    
+   }
+   if(h==home)
+    turn=(turn+1)%2
+
+   move(48,30,500)
+   if (map[h]==1 && h!=home)
+   {
+    if (h==0) opp=12
+    if (h==1) opp=11
+    if (h==2) opp=10
+    if (h==3) opp=9
+    if (h==4) opp=8
+    if (h==5) opp=7
+    if (h==7) opp=5
+    if (h==8) opp=4
+    if (h==9) opp=3
+    if (h==10) opp=2
+    if (h==11) opp=1
+    if (h==12) opp=0
+    t=map[opp]
+    for(z=0;z<t;z++) 
+     transfer(opp,home)
+    transfer(h,home)
+ 
+   }
+  }
+ }
+}
+
+
+function init()
+{
+for (a=1;a<=48;a++)
+{ 
+ spawn(1,1,"bead.gif",a-1)
+ x=(a%6)*93+158
+ y=70
+ if (a>24)
+ {
+   y=y+132
+   hole=(a-24)%6
+ }
+ else
+ {
+   hole=12-(a%6)
+ }
+
+ x=x+offX[map[hole]]
+ y=y+offY[map[hole]]
+ map[hole]=map[hole]+1 
+ bpos[a-1]=hole
+ move(a-1,x,y)
+}
+spawn(1,1000,"circle.gif",48)
+spX=1
+spY=1
+if (systm!="C")
+ {
+  document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='ghost.gif' BORDER=0 USEMAP='#map'></LAYER>")
+ }
+ else
+ {
+  with (document) 
+  {
+   write("<IMG SRC='ghost.gif' STYLE='position:absolute' BORDER=0 USEMAP='#map'>")
+   images[spno].style.posLeft = spX
+   images[spno].style.posTop =  spY
+  }
+ }
+spawn(1,1,"ghost.gif",49)
+}
+
+
+//LAYER MOVE
+function move(spNO,spX,spY){
+ if (systm!="C"){
+  document.layers[0].layers[spNO].moveTo(spX,spY)
+ }else{
+  document.images[spNO].style.posLeft = spX
+  document.images[spNO].style.posTop =  spY
+
+ }
+}
+
+
+//LAYER SETUP
+function spawn(spX,spY,spIMG,spno)
+{
+ if (systm!="C")
+ {
+  document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='"+spIMG+"'></LAYER>")
+ }
+ else
+ {
+  with (document) 
+  {
+   write("<IMG SRC='"+spIMG+"' STYLE='position:absolute'>")
+   images[spno].style.posLeft = spX
+   images[spno].style.posTop =  spY
+  }
+ }
+}
+
+//-->
+</SCRIPT>
+
+</head>
+<body bgcolor=#000000 text=#ffffff link=#0080ff ONLOAD=startFLG=0>
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+for (a=0;a<14;a++)
+{
+ map[a]=0
+}
+init()
+//-->
+</SCRIPT>
+<IMG SRC="mancala.jpg" border=0>
+<img src="ghost.gif">
+<img src="ghost.gif">
+<!--#wpad--> 
+
+
+</body>
+</html>
+
+

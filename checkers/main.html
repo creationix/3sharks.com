@@ -1,0 +1,379 @@
+<html>
+</head>
+<title>Checkers: By Tim Caswell</title> 
+<MAP NAME="map">
+<AREA SHAPE="RECT" COORDS="0,0,75,75" onMouseover="highlight(0,0)" onmouseout="hide()" onclick="sclick(0,0)">
+<AREA SHAPE="RECT" COORDS="76,0,150,75" onMouseover="highlight(1,0)" onmouseout="hide()" onclick="sclick(1,0)">
+<AREA SHAPE="RECT" COORDS="151,0,225,75" onMouseover="highlight(2,0)" onmouseout="hide()" onclick="sclick(2,0)">
+<AREA SHAPE="RECT" COORDS="226,0,300,75" onMouseover="highlight(3,0)" onmouseout="hide()" onclick="sclick(3,0)">
+<AREA SHAPE="RECT" COORDS="301,0,375,75" onMouseover="highlight(4,0)" onmouseout="hide()" onclick="sclick(4,0)">
+<AREA SHAPE="RECT" COORDS="376,0,450,75" onMouseover="highlight(5,0)" onmouseout="hide()" onclick="sclick(5,0)">
+<AREA SHAPE="RECT" COORDS="451,0,525,75" onMouseover="highlight(6,0)" onmouseout="hide()" onclick="sclick(6,0)">
+<AREA SHAPE="RECT" COORDS="526,0,600,75" onMouseover="highlight(7,0)" onmouseout="hide()" onclick="sclick(7,0)">
+<AREA SHAPE="RECT" COORDS="0,76,75,150" onMouseover="highlight(0,1)" onmouseout="hide()" onclick="sclick(0,1)">
+<AREA SHAPE="RECT" COORDS="76,76,150,150" onMouseover="highlight(1,1)" onmouseout="hide()" onclick="sclick(1,1)">
+<AREA SHAPE="RECT" COORDS="151,76,225,150" onMouseover="highlight(2,1)" onmouseout="hide()" onclick="sclick(2,1)">
+<AREA SHAPE="RECT" COORDS="226,76,300,150" onMouseover="highlight(3,1)" onmouseout="hide()" onclick="sclick(3,1)">
+<AREA SHAPE="RECT" COORDS="301,76,375,150" onMouseover="highlight(4,1)" onmouseout="hide()" onclick="sclick(4,1)">
+<AREA SHAPE="RECT" COORDS="376,76,450,150" onMouseover="highlight(5,1)" onmouseout="hide()" onclick="sclick(5,1)">
+<AREA SHAPE="RECT" COORDS="451,76,525,150" onMouseover="highlight(6,1)" onmouseout="hide()" onclick="sclick(6,1)">
+<AREA SHAPE="RECT" COORDS="526,76,600,150" onMouseover="highlight(7,1)" onmouseout="hide()" onclick="sclick(7,1)">
+<AREA SHAPE="RECT" COORDS="0,151,75,225" onMouseover="highlight(0,2)" onmouseout="hide()" onclick="sclick(0,2)">
+<AREA SHAPE="RECT" COORDS="76,151,150,225" onMouseover="highlight(1,2)" onmouseout="hide()" onclick="sclick(1,2)">
+<AREA SHAPE="RECT" COORDS="151,151,225,225" onMouseover="highlight(2,2)" onmouseout="hide()" onclick="sclick(2,2)">
+<AREA SHAPE="RECT" COORDS="226,151,300,225" onMouseover="highlight(3,2)" onmouseout="hide()" onclick="sclick(3,2)">
+<AREA SHAPE="RECT" COORDS="301,151,375,225" onMouseover="highlight(4,2)" onmouseout="hide()" onclick="sclick(4,2)">
+<AREA SHAPE="RECT" COORDS="376,151,450,225" onMouseover="highlight(5,2)" onmouseout="hide()" onclick="sclick(5,2)">
+<AREA SHAPE="RECT" COORDS="451,151,525,225" onMouseover="highlight(6,2)" onmouseout="hide()" onclick="sclick(6,2)">
+<AREA SHAPE="RECT" COORDS="526,151,600,225" onMouseover="highlight(7,2)" onmouseout="hide()" onclick="sclick(7,2)">
+<AREA SHAPE="RECT" COORDS="0,226,75,300" onMouseover="highlight(0,3)" onmouseout="hide()" onclick="sclick(0,3)">
+<AREA SHAPE="RECT" COORDS="76,226,150,300" onMouseover="highlight(1,3)" onmouseout="hide()" onclick="sclick(1,3)">
+<AREA SHAPE="RECT" COORDS="151,226,225,300" onMouseover="highlight(2,3)" onmouseout="hide()" onclick="sclick(2,3)">
+<AREA SHAPE="RECT" COORDS="226,226,300,300" onMouseover="highlight(3,3)" onmouseout="hide()" onclick="sclick(3,3)">
+<AREA SHAPE="RECT" COORDS="301,226,375,300" onMouseover="highlight(4,3)" onmouseout="hide()" onclick="sclick(4,3)">
+<AREA SHAPE="RECT" COORDS="376,226,450,300" onMouseover="highlight(5,3)" onmouseout="hide()" onclick="sclick(5,3)">
+<AREA SHAPE="RECT" COORDS="451,226,525,300" onMouseover="highlight(6,3)" onmouseout="hide()" onclick="sclick(6,3)">
+<AREA SHAPE="RECT" COORDS="526,226,600,300" onMouseover="highlight(7,3)" onmouseout="hide()" onclick="sclick(7,3)">
+<AREA SHAPE="RECT" COORDS="0,301,75,375" onMouseover="highlight(0,4)" onmouseout="hide()" onclick="sclick(0,4)">
+<AREA SHAPE="RECT" COORDS="76,301,150,375" onMouseover="highlight(1,4)" onmouseout="hide()" onclick="sclick(1,4)">
+<AREA SHAPE="RECT" COORDS="151,301,225,375" onMouseover="highlight(2,4)" onmouseout="hide()" onclick="sclick(2,4)">
+<AREA SHAPE="RECT" COORDS="226,301,300,375" onMouseover="highlight(3,4)" onmouseout="hide()" onclick="sclick(3,4)">
+<AREA SHAPE="RECT" COORDS="301,301,375,375" onMouseover="highlight(4,4)" onmouseout="hide()" onclick="sclick(4,4)">
+<AREA SHAPE="RECT" COORDS="376,301,450,375" onMouseover="highlight(5,4)" onmouseout="hide()" onclick="sclick(5,4)">
+<AREA SHAPE="RECT" COORDS="451,301,525,375" onMouseover="highlight(6,4)" onmouseout="hide()" onclick="sclick(6,4)">
+<AREA SHAPE="RECT" COORDS="526,301,600,375" onMouseover="highlight(7,4)" onmouseout="hide()" onclick="sclick(7,4)">
+<AREA SHAPE="RECT" COORDS="0,376,75,450" onMouseover="highlight(0,5)" onmouseout="hide()" onclick="sclick(0,5)">
+<AREA SHAPE="RECT" COORDS="76,376,150,450" onMouseover="highlight(1,5)" onmouseout="hide()" onclick="sclick(1,5)">
+<AREA SHAPE="RECT" COORDS="151,376,225,450" onMouseover="highlight(2,5)" onmouseout="hide()" onclick="sclick(2,5)">
+<AREA SHAPE="RECT" COORDS="226,376,300,450" onMouseover="highlight(3,5)" onmouseout="hide()" onclick="sclick(3,5)">
+<AREA SHAPE="RECT" COORDS="301,376,375,450" onMouseover="highlight(4,5)" onmouseout="hide()" onclick="sclick(4,5)">
+<AREA SHAPE="RECT" COORDS="376,376,450,450" onMouseover="highlight(5,5)" onmouseout="hide()" onclick="sclick(5,5)">
+<AREA SHAPE="RECT" COORDS="451,376,525,450" onMouseover="highlight(6,5)" onmouseout="hide()" onclick="sclick(6,5)">
+<AREA SHAPE="RECT" COORDS="526,376,600,450" onMouseover="highlight(7,5)" onmouseout="hide()" onclick="sclick(7,5)">
+<AREA SHAPE="RECT" COORDS="0,451,75,525" onMouseover="highlight(0,6)" onmouseout="hide()" onclick="sclick(0,6)">
+<AREA SHAPE="RECT" COORDS="76,451,150,525" onMouseover="highlight(1,6)" onmouseout="hide()" onclick="sclick(1,6)">
+<AREA SHAPE="RECT" COORDS="151,451,225,525" onMouseover="highlight(2,6)" onmouseout="hide()" onclick="sclick(2,6)">
+<AREA SHAPE="RECT" COORDS="226,451,300,525" onMouseover="highlight(3,6)" onmouseout="hide()" onclick="sclick(3,6)">
+<AREA SHAPE="RECT" COORDS="301,451,375,525" onMouseover="highlight(4,6)" onmouseout="hide()" onclick="sclick(4,6)">
+<AREA SHAPE="RECT" COORDS="376,451,450,525" onMouseover="highlight(5,6)" onmouseout="hide()" onclick="sclick(5,6)">
+<AREA SHAPE="RECT" COORDS="451,451,525,525" onMouseover="highlight(6,6)" onmouseout="hide()" onclick="sclick(6,6)">
+<AREA SHAPE="RECT" COORDS="526,451,600,525" onMouseover="highlight(7,6)" onmouseout="hide()" onclick="sclick(7,6)">
+<AREA SHAPE="RECT" COORDS="0,526,75,600" onMouseover="highlight(0,7)" onmouseout="hide()" onclick="sclick(0,7)">
+<AREA SHAPE="RECT" COORDS="76,526,150,600" onMouseover="highlight(1,7)" onmouseout="hide()" onclick="sclick(1,7)">
+<AREA SHAPE="RECT" COORDS="151,526,225,600" onMouseover="highlight(2,7)" onmouseout="hide()" onclick="sclick(2,7)">
+<AREA SHAPE="RECT" COORDS="226,526,300,600" onMouseover="highlight(3,7)" onmouseout="hide()" onclick="sclick(3,7)">
+<AREA SHAPE="RECT" COORDS="301,526,375,600" onMouseover="highlight(4,7)" onmouseout="hide()" onclick="sclick(4,7)">
+<AREA SHAPE="RECT" COORDS="376,526,450,600" onMouseover="highlight(5,7)" onmouseout="hide()" onclick="sclick(5,7)">
+<AREA SHAPE="RECT" COORDS="451,526,525,600" onMouseover="highlight(6,7)" onmouseout="hide()" onclick="sclick(6,7)">
+<AREA SHAPE="RECT" COORDS="526,526,600,600" onMouseover="highlight(7,7)" onmouseout="hide()" onclick="sclick(7,7)">
+</MAP>
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var turn = 0
+var mode = 0
+var jumping = 0
+var map = new Array(64)
+var systm="C"
+var bpos = new Array(25)
+var btype = new Array(25)
+var bcrowned = new Array(25)
+var cstart=-1
+
+var imgs = new Array(20)
+imgs[0]=new Image();imgs[0].src="cred.gif"
+imgs[1]=new Image();imgs[1].src="cgreen.gif"
+
+
+function sclick(x,y)
+{   
+ if (mode==0)
+ {
+  valid=1
+  if ((x+y)%2==0) valid=0
+  if (map[x+y*8]!=turn+1) valid=0
+  if (valid==1)
+  {
+   mode=1
+   cstart=x+y*8
+   move(25,x*75+11,y*75+14)
+   move(24,50,800)
+  }
+ }
+ else 
+ {  
+  mode=0
+  move(24,50,800)
+  move(25,50,800)
+  t=cstart-(x+y*8)
+  valid=canjump(x,y)
+
+
+
+  if (valid==1)
+  {
+   transfer(cstart,x+y*8)
+   if (t==-14)
+   {
+    map[x+y*8-7]=0
+    b=pieceat(x+y*8-7)
+   }
+   if (t==-18)
+   {
+    map[x+y*8-9]=0
+    b=pieceat(x+y*8-9)
+   }
+   if (t==14)
+   {
+    map[x+y*8+7]=0
+    b=pieceat(x+y*8+7)
+   }
+   if (t==18)
+   {
+    map[x+y*8+9]=0
+    b=pieceat(x+y*8+9)
+   }
+   if (t==14 || t==18 || t==-14 || t==-18)
+   {
+    bpos[b]=0
+    jumping=1
+    turn=(turn+1)%2
+    mode=1
+    cstart=x+y*8
+    move(b,50,800)
+    move(25,x*75+11,y*75+14)
+    move(24,50,800)
+   }   
+   b=pieceat(x+y*8)
+   if (y==(btype[b]-1)*7)
+   {
+    bcrowned[b]=1
+    imgchg(b,btype[b]-1)
+   }
+   turn=(turn+1)%2
+  }
+  else if (jumping==1)
+  {
+   jumping=0
+   turn=(turn+1)%2
+  }   
+ }
+}
+
+
+//highlight
+function highlight(x,y)
+{
+// move(26,10+bcrowned[pieceat(x+y*8)]*75,15)
+
+ if (mode==0)
+ {
+  valid=1
+  if ((x+y)%2==0) valid=0
+  if (map[x+y*8]!=turn+1) valid=0
+  if (valid==1)
+   move(24,x*75+11,y*75+14)
+  else
+   move(24,50,800)
+ }
+ else
+ {
+  if (canjump(x,y)==1)
+   move(24,x*75+11,y*75+14)
+  else
+   move(24,50,800)
+ }
+}
+
+function canjump(x,y)
+{
+ end = x+y*8
+ valid=0
+ t=cstart-end
+ if (turn==1 || bcrowned[pieceat(cstart)]==1)
+ {
+  if (jumping==0)
+  {
+   if (t==-7) valid=1
+   if (t==-9) valid=1
+  }
+  if (t==-14 && map[end-7]==(2-turn)) valid=1
+  if (t==-18 && map[end-9]==(2-turn)) valid=1
+ }
+ if (turn!=1 || bcrowned[pieceat(cstart)]==1)
+ {
+  if (jumping==0)
+  {
+   if (t==7) valid=1
+   if (t==9) valid=1
+  }
+  if (t==14 && map[end+7]==(2-turn)) valid=1
+  if (t==18 && map[end+9]==(2-turn)) valid=1
+ }
+ if ((x+y)%2==0) valid=0
+ if (map[end]!=0) valid=0
+
+ return valid
+}
+
+function hide()
+{ 
+   move(24,100,800)
+}
+
+function transfer(start,end)
+{
+ b=pieceat(start)
+  
+
+ if (end<8) y=0
+ else if (end<16) y=1
+ else if (end<24) y=2
+ else if (end<32) y=3
+ else if (end<40) y=4
+ else if (end<48) y=5
+ else if (end<56) y=6
+ else y=7
+ x=end%8
+
+ map[start]=0
+ map[end]=btype[b]
+ move(b,x*75+15,y*75+18)
+ bpos[b]=end
+}
+
+function pieceat(square)
+{
+ for(a=0;a<24;a++)
+  if(bpos[a]==square)
+   return a
+}
+
+
+
+function init()
+{
+ turn=1
+ jumping=0
+ mode=0
+ cstart=-1
+
+ a=0
+ for(y=0;y<8;y++)
+ {
+  for (x=0;x<8;x++)
+  {
+   if ((x+y)%2 == 1 && y<3)
+   {
+    sx=x*75+15
+    sy=y*75+18
+    spawn(sx,sy,"green.gif",a)
+    map[x+y*8]=2
+    bpos[a]=x+y*8
+    btype[a]=2
+    a=a+1
+   }
+   if ((x+y)%2 == 1 && y>4)
+   {
+    sx=x*75+15
+    sy=y*75+18
+    map[x+y*8]=1
+    spawn(sx,sy,"red.gif",a)
+    bpos[a]=x+y*8
+    btype[a]=1
+    bcrowned[a]=0
+    a=a+1
+   }
+  }
+ }
+ spawn(1,1000,"box.gif",24)
+ spawn(1,1000,"box2.gif",25)
+ spawn(1,1000,"glow.gif",26)
+ spX=12
+ spY=15
+ if (systm!="C")
+ {
+  document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='ghost.gif' BORDER=0 USEMAP='#map'></LAYER>")
+ }
+ else
+ {
+  with (document) 
+  {
+   write("<IMG SRC='ghost.gif' STYLE='position:absolute' BORDER=0 USEMAP='#map'>")
+   images[27].style.posLeft = spX
+   images[27].style.posTop =  spY
+  }
+ }
+}
+
+//IMAGE CHANGE
+function imgchg(imgNo,dataNo){
+ if (systm!="C"){
+  document.layers[0].layers[imgNo].document.images[0].src=imgs[dataNo].src
+ }else{
+  document.images[imgNo].src=imgs[dataNo].src
+ }
+}
+
+
+//LAYER MOVE
+function move(spNO,spX,spY){
+ if (systm!="C"){
+  document.layers[0].layers[spNO].moveTo(spX,spY)
+ }else{
+  document.images[spNO].style.posLeft = spX
+  document.images[spNO].style.posTop =  spY
+
+ }
+}
+
+
+//LAYER SETUP
+function spawn(spX,spY,spIMG,spno)
+{
+ if (systm!="C")
+ {
+  document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='"+spIMG+"'></LAYER>")
+ }
+ else
+ {
+  with (document) 
+  {
+   write("<IMG SRC='"+spIMG+"' STYLE='position:absolute'>")
+   images[spno].style.posLeft = spX
+   images[spno].style.posTop =  spY
+  }
+ }
+}
+
+//-->
+</SCRIPT>
+
+</head>
+<body bgcolor=#000000 text=#ffffff link=#0080ff ONLOAD=startFLG=0>
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+for (a=0;a<64;a++)
+{
+ map[a]=0
+}
+init()
+//-->
+</SCRIPT>
+<IMG SRC="board.jpg" border=0>
+<img src="ghost.gif">
+<img src="ghost.gif">
+<!--#wpad--> 
+
+
+</body>
+</html>
+
+

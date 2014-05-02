@@ -1,0 +1,220 @@
+<html>
+<head>
+<title>Paddle: By Three Sharks Entertainment</title> 
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var turn=0
+
+var timerID = null                    //timer ID
+var INT = 30                          //interval (ms)
+var mode=0
+var cur=0
+var bl=0
+var sx=0
+var sy=0
+var systm="C"
+var an=0
+var imgs = new Array(20)
+var map = new Array(140)
+var MAXY=520
+var MINY=0
+var MAXX=680
+var MINX=0
+var px=0
+var bx=0
+var by=0
+var mx=0
+var my=0
+var obx=0
+var oby=0
+var opx=0
+imgs[0]=new Image();imgs[0].src="ball.gif"
+imgs[1]=new Image();imgs[1].src="brick.gif"
+imgs[2]=new Image();imgs[2].src="paddle.gif"
+
+
+function buy(n)
+{
+ if (mode==1 ) 
+ {
+  if (gold[turn]>=cost[n])
+  {
+   imgchg(Xpos+Ypos*20,n)
+   gold[turn]=gold[turn]-cost[n]
+  }
+  mode=(1+mode)%2
+ }
+}
+
+function click()
+{
+  mode=1-mode
+}
+
+function slide()
+{
+	px=window.event.x-50
+}
+
+//main function
+function interval1()
+{
+ clearTimeout(timerID) 
+ var x = 0
+ var y = 0  
+ var dlT=0
+ var drT=0
+ var ulT=0
+ var urT=0
+ var tx=0
+ var ty=0
+ if (mode==1)
+ {
+//record old
+  obx=bx
+  oby=by
+
+//move ball
+  bx=bx+mx
+  by=by+my
+
+//walls
+  if (bx < MINX){ bx=MINX; mx=-mx }
+  if (bx > MAXX){ bx=MAXX; mx=-mx }
+  if (by < MINY){ by=MINY; my=-my }
+  if (by > MAXY){ mode=0 }
+
+// speed limits
+  if (mx > 15) {mx=15}
+  if (mx < -15) {mx=-15}
+  if (mx>-5 && mx<0){ mx=-5}
+  if (mx<5 && mx>0){ mx=5}
+
+//paddle reflect
+  if ((bx>px && bx < px+80)&& by>480){ by=480;my=-my;mx=(px-opx+mx)/2 }
+
+// find integer coordinates  
+  tx=(bx)%50
+  ty=(by)%25
+  x=(bx-tx)/50
+  y=(by-ty)/25
+  if (map[x+y*14]==1) disslove(x+y*14)
+
+  move(0,x*50,y*25)
+  move(1,(x+1)*50,y*25)
+  move(2,(x+1)*50,(y+1)*25)
+  move(3,x*50,(y+1)*25)
+
+ }
+ else
+ {
+   bx = px+40
+   by = 480
+   mx=5
+   my=-5
+ }
+  move (cur,px,500)
+  move (bl,bx,by)
+  opx=px
+  timerID = setTimeout("interval1()",INT)
+}
+
+function disslove(n)
+{
+  map[n]=0
+  move(n,0,-20)
+}
+
+function init()
+{
+ a=0
+ for(y=0;y<10;y++)
+ {
+  for(x=0;x<14;x++)
+  {
+   map[x+y*14]=1
+   spawn(x*50,y*25,"brick.gif",a)
+   a=a+1
+  }
+ }
+ spawn(0,0,"paddle.gif",a)
+ cur=a
+ a=a+1
+ spawn(0,0,"ball.gif",a)
+ bl=a
+}
+
+//IMAGE CHANGE
+function imgchg(imgNo,dataNo){
+ if (systm!="C"){
+  document.layers[0].layers[imgNo].document.images[0].src=imgs[dataNo].src
+ }else{
+  document.images[imgNo].src=imgs[dataNo].src
+ }
+}
+
+
+//LAYER MOVE
+function move(spNO,spX,spY){
+ if (systm!="C"){
+  document.layers[0].layers[spNO].moveTo(spX,spY)
+ }else{
+  document.images[spNO].style.posLeft = spX
+  document.images[spNO].style.posTop =  spY
+
+ }
+}
+
+
+//LAYER SETUP
+function spawn(spX,spY,spIMG,spno)
+{
+ if (systm!="C")
+ {
+  document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='"+spIMG+"'></LAYER>")
+ }
+ else
+ {
+  with (document) 
+  {
+   write("<IMG SRC='"+spIMG+"' STYLE='position:absolute'>")
+   images[spno].style.posLeft = spX
+   images[spno].style.posTop =  spY
+  }
+ }
+}
+
+//CLICK START
+function startg()
+{
+
+ timerID = setTimeout("interval1()",1)
+}
+//-->
+</SCRIPT>
+
+</head>
+<body bgcolor=#000000 text=#ffffff link=#0080ff ONLOAD=startFLG=0>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+init()
+document.onmousemove = slide
+document.onclick = click
+startg()
+
+
+
+
+
+//-->
+</SCRIPT>
+
+
+</body>
+</html>
+
+

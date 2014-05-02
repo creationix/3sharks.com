@@ -1,0 +1,71 @@
+<META HTTP-EQUIV="refresh" CONTENT="0; url=frame.html">
+<html>
+<head><title>Loading AOT...</title>
+<style>
+body { font-family:Darklands, Arial, Times New Roman; }
+div { position:absolute; }
+</style>
+<style>
+<!--
+#glowtext{
+filter:glow(color=0080ff,strength=2);
+width:100%;
+}
+-->
+</style>
+
+<script language="JavaScript1.2">
+
+/*
+Glowing Text Script- 
+© Dynamic Drive (www.dynamicdrive.com)
+For full source code, installation instructions,
+100's more DHTML scripts, and Terms Of
+Use, visit dynamicdrive.com
+*/
+
+function glowit(which){
+if (document.all.glowtext[which].filters[0].strength==3)
+document.all.glowtext[which].filters[0].strength=2
+else
+document.all.glowtext[which].filters[0].strength=3
+}
+
+function glowit2(which){
+if (document.all.glowtext.filters[0].strength==3)
+document.all.glowtext.filters[0].strength=2
+else
+document.all.glowtext.filters[0].strength=3
+}
+
+function startglowing(){
+if (document.all.glowtext&&glowtext.length){
+for (i=0;i<glowtext.length;i++)
+eval('setInterval("glowit('+i+')",150)')
+}
+else if (glowtext)
+setInterval("glowit2(0)",150)
+}
+
+if (document.all)
+window.onload=startglowing
+</script>
+
+</head>
+<body bgcolor="000000" text="400080">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<center>
+<FONT STYLE="font-size:24px" COLOR="#400080"><span id="glowtext">&nbspLoading AOT II...<br>Level 3</span></FONT><P>
+<Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br>
+Web Provider Ad:<!--#wpad--> 
+</body>
+</head>

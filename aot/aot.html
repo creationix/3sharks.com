@@ -1,0 +1,977 @@
+<HTML>
+
+<HEAD>
+<TITLE>AOT MAIN FRAME</TITLE>
+<style>
+body { font-family:Darklands, Arial, Times New Roman; }
+div { position:absolute; }
+</style>
+
+<style>
+#glowtext{
+filter:glow(color=FFFF00,strength=2);
+width:100%;
+}
+-->
+</style>
+
+<script language="JavaScript1.2">
+function glowit(which){
+if (document.all.glowtext[which].filters[0].strength==3)
+document.all.glowtext[which].filters[0].strength=2
+else
+document.all.glowtext[which].filters[0].strength=3
+}
+
+function glowit2(which){
+if (document.all.glowtext.filters[0].strength==3)
+document.all.glowtext.filters[0].strength=2
+else
+document.all.glowtext.filters[0].strength=3
+}
+
+function startglowing(){
+if (document.all.glowtext&&glowtext.length){
+for (i=0;i<glowtext.length;i++)
+eval('setInterval("glowit('+i+')",150)')
+}
+else if (glowtext)
+setInterval("glowit2(0)",150)
+}
+
+if (document.all)
+window.onload=startglowing
+</script>
+
+<script language="Javascript1.2">
+<!--
+var solid=0
+var startX=132;
+var startY=256
+var score=0                           //score
+var startFLG=-1                       //start flag
+var gameFLG=0                         //game play flag
+var timerID = null                    //timer ID
+var INT = 25                          //interval (ms)
+var X=0                             //my chr X
+var Y=0
+var rx=0
+var ry=0
+var IX=0                              //my chr right move
+var IY=0                              //       down
+var DX=0                              //       left
+var DY=0                              //       up
+var IIX=0                             //       right speed up
+var DDX=0                             //       left
+var spCOUNT=0                         //LAYER COUNTER
+var cCount=0
+var cStart=0
+var coX = new Array(99)
+var coY = new Array(99)
+var fCount=0
+var fStart=0
+var fiX = new Array(99)
+var fiY = new Array(99)
+var kCount=0
+var kStart=0
+var keX = new Array(99)
+var keY = new Array(99)
+var dCount=0
+var dStart=0
+var doX = new Array(99)
+var doY = new Array(99)
+var mySP=0                            //my chr COUNT
+var jmpFLG=0                          //jump flag
+var stepFLG=0                         //my chr step flag
+var tmLMT=2000                        //time limit
+var timeC=0                           //time count
+var keys=0
+var kiLeft = new Array(9)                //slug     X
+var kiRight = new Array(9)                //slug     X
+var kiX = new Array(9)                //slug     X
+var kiY = new Array(9)                //         Y
+var kiF = new Array(9)                //         null FLAG
+var kiDX = new Array(9)               //         DX
+var kiCount = 0					      //	 Slug Count
+var tlT = 0
+var trT = 0
+var blT = 0
+var brT = 0
+var ladder=0
+var kup=0
+var kdown=0
+var shootX=0
+var shootY=0
+var shootF=0
+var shootDX=0
+var shootDY=0
+var shootSP=0
+var fire=0
+var imgs = new Array(20)
+var map = new Array(768)
+
+imgs[0]=new Image();imgs[0].src="boy1c.gif"
+imgs[1]=new Image();imgs[1].src="boy2c.gif"
+imgs[2]=new Image();imgs[2].src="boy4c.gif"
+imgs[3]=new Image();imgs[3].src="boy3c.gif"
+imgs[4]=new Image();imgs[4].src="boy5c.gif"
+imgs[5]=new Image(); imgs[5].src="gem.gif"
+imgs[6]=new Image(); imgs[6].src="null.gif"
+imgs[7]=new Image(); imgs[7].src="slug.gif"
+imgs[8]=new Image(); imgs[8].src="flame.gif"
+imgs[9]=new Image(); imgs[9].src="fire.gif"
+imgs[10]=new Image(); imgs[10].src="key.gif"
+imgs[11]=new Image(); imgs[11].src="door.gif"
+imgs[12]=new Image(); imgs[12].src="ladder.gif"
+
+
+//IE check
+ var systm=""
+ ver=navigator.appVersion
+ len=ver.length
+ for(iln=0;iln<len;iln++) if(ver.charAt(iln)=="(") break
+ systm = ver.charAt(iln+1).toUpperCase()
+
+//---------------------------------------------------------
+//                 main function
+//---------------------------------------------------------
+
+//main function
+function interval1(){
+ clearTimeout(timerID)
+ 
+ timeC=timeC-1
+ parent.scr.document.forms[0].elements[1].value = timeC
+ parent.scr.document.forms[0].elements[0].value = score
+
+ if (timeC==0){stopG()}
+
+ stepFLG=stepFLG+1;if (stepFLG>=2){stepFLG=0}
+ if(X<100){X=100;IX=0;DX=0}
+ if(X>1720){X=1720;IX=0;DX=0;stopG()}
+
+ DX=DX+DDX;if (DX>8){DX=8;DDX=0}else{if (DX<0){DX=0;DDX=0}}
+ IX=IX+IIX;if (IX>8){IX=8;DDX=0}else{if (IX<0){IX=0;IIX=0}}
+
+ X=X+IX-DX
+ 
+ DY=DY-1
+ if (solid==1&&jmpFLG==0) {DY=DY/2}
+ if (ladder!=1){Y=Y-DY}
+ if (ladder==1) {Y=Y+kdown*6-kup*6}
+ if (Y>=352){Y=352;jmpFLG=0}
+
+
+ if (ladder==1){imgchg(mySP,0)}
+ else if (IX<DX){
+  if (jmpFLG==0){imgchg(mySP,3+stepFLG)}else{imgchg(mySP,4)}
+ }else{
+  if (IX>DX){
+   if (jmpFLG==0){imgchg(mySP,1+stepFLG)}else{imgchg(mySP,2)}
+  }else{
+   if (jmpFLG==0){imgchg(mySP,0)}else{imgchg(mySP,2)}
+  }
+ }
+
+if (shootF>0){
+ shootX=shootX+shootDX
+ shootY=shootY+shootDY
+ 
+ spMOV(shootSP,shootX,shootY)
+ spMOV(shootSP+1,shootX+shootF,shootY+8)
+ spMOV(shootSP+2,shootX-shootF,shootY-8)
+ spMOV(shootSP+3,shootX-8,shootY+shootF)
+ spMOV(shootSP+4,shootX+8,shootY-shootF)
+ for (ik=0;ik<kiCount;ik++){
+  if ((shootX>kiX[ik]-16)&&(shootX<kiX[ik]+32)&&(shootY>kiY[ik]-16)&&(shootY<kiY[ik]+32)){
+   score=score+200
+   imgchg(ik,6)
+   kiF[ik]=0
+   shootF=0
+  }
+ }
+ shootF=shootF+1
+ if (shootF>30){shootF=0}
+ if (shootF==0){
+  for (tp=0;tp<5;tp++){
+   spMOV(shootSP+tp,-1000,-1000)
+  }
+ } 
+}
+
+kmove()
+
+getCHK()
+hitCHK()
+
+
+spMOV(mySP,X,Y)
+sc2(X-100)
+if (Y>=352){stopG()}
+
+
+if (gameFLG==1){timerID = setTimeout("interval1()",INT)}
+}
+
+//---------------------------------------------------------
+//                 sub functions
+//---------------------------------------------------------
+
+//CLICK START
+function startG(){
+ document.onkeydown = keyDown
+ document.onkeyup = keyUp
+ if (systm!="C"){
+  document.captureEvents(Event.KEYDOWN|Event.KEYUP)
+  document.layers["starter"].moveTo(-1000,-1000)
+  document.layers["CLRmes"].moveTo(0,0)
+  document.layers["GMOmes"].moveTo(0,0)
+ }else{
+	
+  starter.style.posTop = -1000
+  starter.style.posLeft = 2000
+  CLRmes.style.posTop = -1000
+  GMOmes.style.posTop = -1000
+ }
+ for (ia=0; ia<kiCount; ia++){
+  imgchg(ia,6+kiF[ia])
+  kiDX[ia]=-4
+ }
+ 
+ BGMSTART()
+ gameFLG=1
+ score=0
+ keys=0
+ DDX=0;IIX=0;DX=0;IX=0
+ timeC=tmLMT
+ parent.scr.document.forms[0].elements[0].value = score
+ parent.scr.document.forms[0].elements[0].value = tmLMT
+
+ X=startX;Y=startY
+ timerID = setTimeout("interval1()",1)
+}
+
+
+//GAME STOP
+function stopG(){
+ DY=0
+ clearTimeout(timerID)
+ if (timeC<=0){
+  if (systm!="C"){
+   document.layers["TMOmes"].moveTo(0,1050)
+  }else{
+   TMOmes.style.posTop = 50
+   TMOmes.style.posLeft = 20+X
+  }
+ }else{
+  if (X>=1699){
+   if (systm!="C"){
+    document.layers["CLRmes"].moveTo(0,1050)
+   }else{
+    CLRmes.style.posTop = 50
+    CLRmes.style.posLeft = 50+X
+   }
+  }else{
+   if (systm!="C"){
+    document.layers["GMOmes"].moveTo(0,1050)
+   }else{
+    GMOmes.style.posTop = 50
+    GMOmes.style.posLeft = 20+X
+   }
+  }
+ }
+
+ gameFLG=0
+ startFLG=0
+ if (systm!="C"){
+  document.layers["starter"].moveTo(0,0)
+ }else{
+  starter.style.posTop = 100
+  starter.style.posLeft = 50+X
+ }
+ BGMSTOP()
+}
+
+// BGMSTOP
+function BGMSTOP(){
+ if (systm == "C"){
+  BG.outerHTML = "<div id='BG'></DIV>"
+ }else{
+  document.embeds[0].stop()
+ }
+}
+
+//BGMSTART
+function BGMSTART(){
+ if (systm == "C"){
+  BG.outerHTML = "<div id='BG'><BGSOUND LOOP='-1' SRC='sicily.mid'></DIV>"
+ }else{
+  document.embeds[0].stop()
+  document.embeds[0].play(true)
+ }
+}
+
+
+
+//LAYER SETUP
+function spINI(spX,spY,spIMG){
+  if (systm!="C"){
+   document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='"+spIMG+"'></LAYER>")
+  }else{
+   with (document) {
+    write("<IMG SRC='"+spIMG+"' STYLE='position:absolute'>")
+    images[spCOUNT].style.posLeft = spX
+    images[spCOUNT].style.posTop =  spY
+   }
+  }
+spCOUNT=spCOUNT+1
+}
+
+//LAYER MOVE
+function spMOV(spNO,spX,spY){
+ if (systm!="C"){
+  document.layers[0].layers[spNO].moveTo(spX,spY)
+ }else{
+  document.images[spNO].style.posLeft = spX
+  document.images[spNO].style.posTop =  spY
+ }
+}
+
+//IMAGE CHANGE
+function imgchg(imgNo,dataNo){
+ if (systm!="C"){
+  document.layers[0].layers[imgNo].document.images[0].src=imgs[dataNo].src
+ }else{
+  document.images[imgNo].src=imgs[dataNo].src
+ }
+}
+
+//SCROLL
+function sc2(scr2){
+ if (systm!="C"){
+  document.layers[0].left=-scr2
+ }else{
+  window.scroll(scr2,0)
+ }
+}
+
+//ON KEY DOWN
+function keyDown(DnEvents){
+ if (systm != "C"){
+  k=DnEvents.which
+  if (k == 54){IIX=2}     // 6
+  if (k == 52){DDX=2}     // 4
+
+  if (k == 90){if (solid==1){DY=14;Y=Y-4;jmpFLG=1}if(ladder==1){Y=Y-6}}     //Z
+  if (k == 122){if (solid==1){DY=14;Y=Y-4;jmpFLG=1}if(ladder==1){Y=Y-6}}    //z
+  if (k == 88){SHOOT()}     //X
+  if (k == 120){SHOOT()}    //x
+ }else{
+  k=window.event.keyCode
+  if (k == 102){IIX=2}    // 6
+  if (k == 100){DDX=2}    // 4
+
+  if (k == 54){IIX=2}     // 6
+  if (k == 52){DDX=2}     // 4
+
+  if (k == 39){IIX=2}     // Right
+  if (k == 37){DDX=2}     // Left
+  if (k == 38){kup=1}    // Up
+  if (k == 40){kdown=1}    // down
+
+  if (k == 90){if (solid==1){DY=14;Y=Y-4;jmpFLG=1}if(ladder==1){Y=Y-6}}     //Z
+  if (k == 122){if (solid==1){DY=14;Y=Y-4;jmpFLG=1}if(ladder==1){Y=Y-6}}    //z
+  if (k == 88){SHOOT()}     //X
+  if (k == 120){SHOOT()}    //x
+
+ }
+}
+
+//ON KEY UP
+function keyUp(UpEvents){
+ if (systm != "C"){
+  k=UpEvents.which
+  if (k == 54){IIX=-2}
+  if (k == 52){DDX=-2}
+
+  if (k == 90){if (DY>0){DY=DY/2}}     //Z
+  if (k == 122){if (DY>0){DY=DY/2}}    //z
+
+ }else{
+  k=window.event.keyCode
+  if (k == 102){IIX=-2}    // 6
+  if (k == 100){DDX=-2}    // 4
+
+  if (k == 54){IIX=-2}     // 6
+  if (k == 52){DDX=-2}     // 4
+
+  if (k == 39){IIX=-2}     // Right
+  if (k == 37){DDX=-2}     // Left
+  if (k == 38){kup=0}    // Up
+  if (k == 40){kdown=0}    // down
+
+  if (k == 90){if (DY>0){DY=DY/2}}     //Z
+  if (k == 122){if (DY>0){DY=DY/2}}    //z
+
+ }
+}
+
+
+//BLOCK SETUP
+function bs(bx,by){
+ map[(bx-2)+by*64]="wall"
+ spINI((bx-2)*32,by*32,'block.gif')
+}
+
+//door SETUP
+function dr(bx,by){
+ map[bx-2+by*64]="door"
+ doX[dCount]=bx-2;doY[dCount]=by
+ dCount=dCount+1
+ spINI((bx-2)*32,by*32,'door.gif')
+}
+
+//ladder SETUP
+function ls(bx,by){
+ map[bx-2+by*64]="ladder"
+ spINI((bx-2)*32,by*32,'ladder.gif')
+}
+
+//key SETUP
+function ky(bx,by){
+ map[bx-2+by*64]="key"
+ keX[kCount]=bx-2;keY[kCount]=by
+ kCount=kCount+1
+ spINI((bx-2)*32+8,by*32+3,'key.gif')
+}
+
+//spike SETUP
+function spk(bx,by){
+ map[bx-2+by*64]="spike"
+ spINI((bx-2)*32+8,by*32,'spike.gif')
+}
+
+//water SETUP
+function ws(bx,by){
+ map[bx+by*64]="water"
+ spINI(bx*32,by*32,'water.gif')
+}
+
+//COIN SETUP
+function cs(cx,cy){
+ map[cx-2+cy*64]="gem"
+ coX[cCount]=cx-2;coY[cCount]=cy
+ cCount=cCount+1
+ spINI((cx-2)*32,cy*32,'gem.gif')
+
+}
+
+//fire SETUP
+function fs(cx,cy){
+ map[cx-2+cy*64]="fire"
+ fiX[fCount]=cx-2;fiY[fCount]=cy
+ fCount=fCount+1
+ spINI((cx-2)*32+8,cy*32+8,'fire.gif')
+}
+
+//SLUG SETUP
+function ks(kx,ky,kl,kr){
+ map[kx-2+ky*64]="slug"
+ kiX[kiCount]=(kx-2)*32;kiY[kiCount]=ky*32
+ kiLeft[kiCount]=kl-2;kiRight[kiCount]=kr-2 
+ kiF[kiCount]=1
+ spINI((kx-2)*32,ky*32,'slug.gif')
+ kiCount=kiCount+1
+}
+
+
+//SLUG MOVE
+function kmove(){
+ for (ik=0; ik<kiCount; ik++){
+  if (kiF[ik]==1){  
+   kiX[ik]=kiX[ik]+kiDX[ik]  
+   if (kiX[ik]<=kiLeft[ik]*32){kiDX[ik]=4+(ik % 2)}else{if (kiX[ik]>=kiRight[ik]*32){kiDX[ik]=-(ik % 2)-4}}
+   if (kiF[ik]==1&&X>kiX[ik]-30&&X<kiX[ik]+30&&Y>kiY[ik]-30&&Y<kiY[ik]+30){stopG()}
+   spMOV(ik,kiX[ik],kiY[ik])
+  }
+ }
+}
+
+//SHOOT
+function SHOOT(){
+ if (shootF==0&&fire>0){
+  fire=fire-1
+  shootX=X+8
+  shootY=Y+8
+  if (IX>DX){shootDX=20;shootDY=0}
+  if (IX<DX){shootDX=-20;shootDY=0}
+  if (IX==DX){shootDX=0;shootDY=-10}
+  shootF=1
+ }
+}
+
+//GET CHECK
+function getCHK(){
+ rx=(X+16)%32
+ ry=(Y+16)%32
+ sx=((X+16)-rx)/32
+ sy=((Y+16)-ry)/32
+ if (map[sx+sy*64]=="fire"){killat(sx,sy);score=score+100;fire=fire+1}
+ if (map[sx+sy*64]=="key"){killat(sx,sy);score=score+300;keys=keys+1}
+ rx=(X)%32
+ ry=(Y)%32
+ sx=((X)-rx)/32
+ sy=((Y)-ry)/32
+
+ if (map[sx+sy*64]=="door"&&rx<30&&ry<30&&keys>0){killat(sx,sy);score=score+50;keys-keys-1}
+ if (map[sx+sy*64+1]=="door"&&rx>1&&ry<30&&keys>0){killat(sx+1,sy);score=score+50;keys=keys-1}
+ if (map[sx+sy*64+64]=="door"&&rx<30&&ry>1&&keys>0){killat(sx,sy+1);score=score+50;keys=keys-1}
+ if (map[sx+sy*64+65]=="door"&&rx>1&&ry>1&&keys>0){killat(sx+1,sy+1);score=score+50;keys=keys-1}
+ if (map[sx+sy*64]=="gem"&&rx<24&&ry<24){killat(sx,sy);score=score+150}
+ if (map[sx+sy*64+1]=="gem"&&rx>8&&ry<24){killat(sx+1,sy);score=score+150}
+ if (map[sx+sy*64+64]=="gem"&&rx<24&&ry>8){killat(sx,sy+1);score=score+150}
+ if (map[sx+sy*64+65]=="gem"&&rx>8&&ry>8){killat(sx+1,sy+1);score=score+150}
+}
+
+//KILL AT
+function killat(sx,sy)
+{
+ map[sx+sy*64]=""
+ for (ik=0;ik<cCount;ik++) { 
+  if (coX[ik]==sx && coY[ik]==sy){imgchg(cStart+ik,6)}
+ }
+ for (ik=0;ik<fCount;ik++) { 
+  if (fiX[ik]==sx && fiY[ik]==sy){imgchg(fStart+ik,6)}
+ }
+ for (ik=0;ik<dCount;ik++) { 
+  if (doX[ik]==sx && doY[ik]==sy){imgchg(dStart+ik,6)}
+ }
+ for (ik=0;ik<kCount;ik++) { 
+  if (keX[ik]==sx && keY[ik]==sy){imgchg(kStart+ik,6)}
+ }
+}
+
+//HIT CHECK
+function hitCHK(){
+ ladder=0
+ solid=0
+ rx=X%32
+ ry=Y%32
+ sx=(X-rx)/32
+ sy=(Y-ry)/32
+ ulT=0
+ urT=0
+ dlT=0
+ drT=0
+ if (Y<0){Y=0}
+ if (map[sx+sy*64+64]=="door"){dlT=1}
+ if (map[sx+sy*64+65]=="door"){drT=1}
+ if (map[sx+sy*64+64]=="wall"){dlT=1}
+ if (map[sx+sy*64+65]=="wall"){drT=1}
+ if (map[sx+sy*64+64]=="spike"&&rx<16&&ry>8){X=sx*32+16;stopG()}
+ if (map[sx+sy*64+65]=="spike"&&rx>16&&ry>8){X=sx*32+16;stopG()}
+ if (map[sx+sy*64]=="wall"){ulT=1}
+ if (map[sx+sy*64+1]=="wall"){urT=1}
+ if (map[sx+sy*64]=="door"){ulT=1}
+ if (map[sx+sy*64+1]=="door"){urT=1}
+ if (map[sx+sy*64]=="spike"&&rx<20&&ry<29){X=sx*32+20}
+ if (map[sx+sy*64+1]=="spike"&&rx>12&&ry<29){X=sx*32+12}
+ if (ulT==1){
+  if (rx>ry){
+   X=sx*32+32
+  } 
+  else{
+   Y=sy*32+32
+   dy=0
+  }
+ } 
+  if (urT==1){
+  if ((31-rx)>ry){
+   X=sx*32
+   dy=0
+
+  } 
+  else{
+   Y=sy*32+32
+  }
+ } 
+ if (dlT==1){
+  if ((31-rx)<ry){
+   X=sx*32+32
+  } 
+  else{
+   Y=sy*32
+   jmpFLG=0
+   solid=1
+  }
+ } 
+ if (drT==1){
+  if (rx<ry){
+   X=sx*32
+  } 
+  else{
+   Y=sy*32
+   jmpFLG=0
+   solid=1
+  }
+ } 
+ if (map[sx+sy*64]=="ladder"){solid=1;DY=0;ladder=1;if (kup+kdown && rx>0){X=X-1}}
+ if (map[sx+sy*64+1]=="ladder"){solid=1;DY=0;ladder=1;if (kup+kdown){X=X+1}}
+ if (map[sx+sy*64+64]=="ladder"){solid=1;ladder=1;if (kup+kdown && rx>0){X=X-1}}
+ if (map[sx+sy*64+65]=="ladder"){solid=1;ladder=1;if (kup+kdown){X=X+1}}
+ 
+}
+
+
+//-->
+</script>
+
+</HEAD>
+
+<body bgcolor=#101010 background=mountain.jpg bgproperties=fixed ONLOAD=startFLG=0>
+
+<DIV ID=BG></DIV>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+document.write("<LAYER TOP=0 LEFT=0>")
+for (a=0;a<769;a++){map[a]=""}
+
+//SLUG DATA
+ks(9,3,5,10)
+ks(17,2,17,18)
+ks(18,6,17,20)
+ks(45,4,43,46)
+ks(50,9,50,53)
+ks(53,9,50,53)
+
+//COIN DATA
+cStart=spCOUNT
+cs(7,6)
+cs(8,6)
+cs(11,2)
+cs(12,2)
+cs(12,6)
+cs(13,6)
+cs(15,1)
+cs(16,1)
+cs(19,0)
+cs(20,0)
+cs(26,0)
+cs(26,4)
+cs(26,5)
+cs(26,8)
+cs(27,0)
+cs(27,4)
+cs(27,5)
+cs(27,8)
+cs(32,2)
+cs(34,4)
+cs(36,6)
+cs(37,3)
+cs(38,2)
+cs(38,8)
+cs(44,7)
+cs(45,7)
+cs(48,9)
+cs(51,4)
+cs(58,6)
+cs(58,8)
+cs(59,7)
+cs(59,9)
+cs(60,7)
+cs(60,9)
+cs(61,6)
+cs(61,8)
+
+
+//FIRE DATA
+fStart=spCOUNT
+fs(5,2)
+fs(5,3)
+fs(6,3)
+fs(13,10)
+fs(45,0)
+fs(46,1)
+fs(47,7)
+fs(56,2)
+fs(57,1)
+fs(58,2)
+fs(59,1)
+fs(60,1)
+fs(61,2)
+fs(62,1)
+fs(63,2)
+
+//door DATA
+dStart=spCOUNT
+dr(4,8)
+dr(29,2)
+dr(44,1)
+dr(47,1)
+dr(56,10)
+
+
+//key DATA
+kStart=spCOUNT
+ky(18,4)
+ky(30,9)
+ky(47,3)
+ky(55,5)
+
+
+//Water DATA
+for (a=0;a<=62;a++) {ws(a,11 )}
+
+//BLOCK DATA
+bs(2,0)
+bs(3,1)
+bs(4,2)
+bs(4,3)
+bs(4,4)
+bs(4,5)
+bs(4,6)
+bs(4,7)
+bs(4,9)
+bs(3,7)
+bs(3,8)
+bs(3,9)
+bs(5,4)
+bs(5,9)
+bs(6,4)
+bs(6,9)
+bs(7,4)
+bs(7,9)
+bs(8,4)
+bs(4,9)
+bs(9,4)
+bs(10,4)
+bs(10,11)
+bs(11,8)
+bs(13,4)
+bs(13,11)
+bs(14,4)
+bs(14,8)
+bs(16,11)
+bs(17,3)
+bs(17,7)
+bs(18,3)
+bs(18,7)
+bs(19,7)
+bs(19,11)
+bs(20,7)
+bs(21,2)
+bs(21,10)
+bs(22,2)
+bs(22,10)
+bs(23,10)
+bs(24,2)
+bs(24,10)
+bs(25,2)
+bs(25,10)
+bs(28,3)
+bs(28,11)
+bs(29,0)
+bs(29,1)
+bs(29,3)
+bs(29,4)
+bs(29,5)
+bs(29,6)
+bs(29,7)
+bs(29,8)
+bs(29,9)
+bs(29,10)
+bs(29,11)
+bs(30,3)
+bs(30,10)
+bs(31,10)
+bs(32,1)
+bs(32,5)
+bs(32,9)
+bs(32,10)
+bs(33,1)
+bs(34,1)
+bs(34,7)
+bs(35,1)
+bs(36,1)
+bs(36,2)
+bs(36,3)
+bs(36,4)
+bs(36,9)
+bs(37,1)
+bs(37,4)
+bs(38,1)
+bs(38,4)
+bs(38,11)
+bs(39,1)
+bs(39,6)
+bs(40,1)
+bs(40,2)
+bs(40,6)
+bs(40,11)
+bs(41,2)
+bs(41,11)
+bs(42,2)
+bs(42,6)
+bs(42,11)
+bs(43,2)
+bs(43,5)
+bs(43,6)
+bs(44,0)
+bs(44,2)
+bs(44,5)
+bs(44,9)
+bs(45,2)
+bs(45,5)
+bs(45,9)
+bs(46,2)
+bs(46,5)
+bs(46,6)
+bs(46,7)
+bs(46,8)
+bs(46,9)
+bs(46,10)
+bs(46,11)
+bs(47,0)
+bs(47,2)
+bs(47,4)
+bs(47,5)
+bs(47,8)
+bs(47,11)
+bs(48,2)
+bs(48,3)
+bs(48,4)
+bs(48,11)
+bs(49,4)
+bs(49,7)
+bs(50,7)
+bs(50,10)
+bs(51,2)
+bs(51,7)
+bs(51,10)
+bs(52,2)
+bs(52,7)
+bs(52,10)
+bs(53,5)
+bs(53,10)
+bs(54,5)
+bs(55,8)
+bs(55,11)
+bs(56,3)
+bs(56,4)
+bs(56,5)
+bs(56,6)
+bs(56,7)
+bs(56,8)
+bs(56,9)
+bs(56,11)
+bs(57,4)
+bs(57,9)
+bs(57,10)
+bs(57,11)
+bs(58,3)
+bs(58,4)
+bs(58,7)
+bs(58,9)
+bs(59,4)
+bs(60,4)
+bs(61,3)
+bs(61,4)
+bs(61,9)
+bs(62,4)
+bs(63,3)
+bs(63,4)
+bs(63,5)
+bs(63,6)
+bs(63,7)
+bs(63,8)
+bs(63,9)
+bs(63,10)
+bs(63,11)
+
+//spike DATA
+spk(3,0)
+spk(4,1)
+spk(22,9)
+spk(24,9)
+spk(42,1)
+spk(51,1)
+spk(51,6)
+spk(52,1)
+spk(52,6)
+spk(53,4)
+spk(54,4)
+
+//ladder DATA
+ls(23,2)
+ls(23,3)
+ls(23,4)
+ls(23,5)
+ls(23,6)
+ls(23,7)
+ls(23,8)
+ls(23,9)
+ls(41,6)
+ls(41,7)
+ls(41,8)
+ls(41,9)
+ls(41,10)
+
+
+//my chr (imgNo mySP)
+ mySP=spCOUNT
+ spINI(startX,startY,'boy1c.gif')
+ shootSP=spCOUNT
+ spINI(-1000,-1000,'flame.gif')
+ spINI(-1000,-1000,'flame.gif')
+ spINI(-1000,-1000,'flame.gif')
+ spINI(-1000,-1000,'flame.gif')
+ spINI(-1000,-1000,'flame.gif')
+ document.write("</LAYER>")
+
+  
+//-->
+</SCRIPT>
+
+<LAYER TOP=0 LEFT=0 NAME=CLRmes>
+<DIV ID="CLRmes" STYLE='position:absolute; top: -1000; left: 150'>
+<FONT STYLE=font-size:24px COLOR=#006600><span id=glowtext>CLEAR!</span></FONT><P>
+</DIV>
+</LAYER>
+
+<LAYER TOP=0 LEFT=0 NAME=TMOmes>
+<DIV ID="TMOmes" STYLE='position:absolute; top: -1000; left: 120'>
+<FONT STYLE=font-size:24px COLOR=#990000><span id=glowtext>TIME OVER!</span></FONT><P>
+</DIV>
+</LAYER>
+
+<LAYER TOP=0 LEFT=0 NAME=GMOmes>
+<DIV ID="GMOmes" STYLE='position:absolute; top: -1000; left: 120'>
+<FONT STYLE=font-size:24px COLOR=#990000><span id=glowtext>GAME OVER!</span></FONT><P>
+</DIV>
+</LAYER>
+
+
+<LAYER TOP=0 LEFT=0 NAME=starter>
+<DIV ID="starter" STYLE='position:absolute; top: 150; left: 200'>
+<FORM NAME=FORM1>
+<INPUT TYPE="button" VALUE="START" ONCLICK="if (startFLG!=1){startFLG=1;startG();if (systm!='C'){blur()}}else{blur()}">
+</FORM>
+</DIV>
+</LAYER>
+
+
+<LAYER TOP=0 LEFT=0 NAME=restarter>
+<DIV ID="restarter" STYLE='position:absolute; top: -1000; left: 200'>
+<FORM NAME=FORM2>
+<INPUT TYPE="button" VALUE="PAUSE!" ONCLICK="if (startFLG==1){clearTimeout(timerID);startFLG=2;restarter.style.posLeft=X+50}else{if (startFLG==2){startFLG=1;blur();restarter.style.posTop = -1000;timerID = setTimeout('interval1()',INT)}else{restarter.style.posTop = -1000}}">
+</FORM>
+</DIV>
+</LAYER>
+
+ -->
+
+<Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br>
+Web Provider Ad:<!--#wpad--> 
+</BODY>
+</HTML>

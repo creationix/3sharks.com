@@ -1,0 +1,102 @@
+<html>
+
+<head>
+
+<style>
+body { font-family:Darklands, Arial, Times New Roman; }
+div { position:absolute; }
+</style>
+<style>
+<!--
+#glowtext{
+filter:glow(color=0080FF,strength=2);
+width:100%;
+}
+-->
+</style>
+
+<script language="JavaScript1.2">
+
+/*
+Glowing Text Script- 
+© Dynamic Drive (www.dynamicdrive.com)
+For full source code, installation instructions,
+100's more DHTML scripts, and Terms Of
+Use, visit dynamicdrive.com
+*/
+
+function glowit(which){
+if (document.all.glowtext[which].filters[0].strength==3)
+document.all.glowtext[which].filters[0].strength=2
+else
+document.all.glowtext[which].filters[0].strength=3
+}
+
+function glowit2(which){
+if (document.all.glowtext.filters[0].strength==3)
+document.all.glowtext.filters[0].strength=2
+else
+document.all.glowtext.filters[0].strength=3
+}
+
+function startglowing(){
+if (document.all.glowtext&&glowtext.length){
+for (i=0;i<glowtext.length;i++)
+eval('setInterval("glowit('+i+')",150)')
+}
+else if (glowtext)
+setInterval("glowit2(0)",150)
+}
+
+if (document.all)
+window.onload=startglowing
+</script>
+<TITLE>AOT 3.0 Game Overview</TITLE>
+
+
+</head>
+
+<body bgcolor="#000000" bgproperties="fixed" text="#ffffff" link="#0ff00" vlink="#00ff00" alink="#2020ff" >
+<center>
+<h1><font color="400080"><span id="glowtext">Adventures of Tim II <br>-- Eclipse --</span></font></h1>
+
+<table border=1 width=80%>
+<Tr>
+<td valign="Top" bgcolor="202020">
+<img src="scrshot2.jpg" border=2><Br>
+<td valign="top" bgcolor="202020">
+<table><tr><td width=80%>
+<font size="6" color="0080ff">Controls</font><br>
+
+<font size="4">
+left: 4 or left<br>
+right: 6 or right<Br>
+left: 8 or up<br>
+right: 2 or down<Br>
+jump: Z or z<br>
+shoot: X or x<br></font>
+<td valign=top>
+<center><table border=1 cellpadding=0><tr><td><img src="../tsestamp.jpg" border=0></table>
+</table>
+<font size="6" color="0080ff">Gameplay</font><br>
+<font size="4">
+Collect the gems, shoot the slugs, find keys to unlock doors and don't fall on your way to enter the castle<br>
+</font>
+</table>
+<form>
+  <input name="LoadButton" onclick="window.open('level1/load.html','AOT2',
+                                'width=660,height=378')" type="button" value="Level 1">
+  <input name="LoadButton" onclick="window.open('level2/load.html','AOT2',
+                                'width=660,height=378')" type="button" value="Level 2">
+  <input name="LoadButton" onclick="window.open('level3/load.html','AOT2',
+                                'width=660,height=378')" type="button" value="Level 3">
+</form>
+<hr>
+
+<center>
+<!--#wpad--> 
+</center>
+</body>
+</html>
+</body>
+</html>  

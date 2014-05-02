@@ -1,0 +1,173 @@
+<html>
+<head>
+<title>Hexwar: By Three Sharks Entertainment</title> 
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var turn=0
+var players = 2
+var gold = new Array(players)
+
+var mode=0
+var cur=0
+var sx=0
+var sy=0
+var systm="C"
+var cost = new Array(10)
+cost[0]=0
+cost[1]=40
+cost[2]=20
+cost[3]=100
+cost[4]=100
+cost[5]=10
+cost[6]=5
+cost[7]=3
+cost[8]=10
+var imgs = new Array(20)
+imgs[0]=new Image();imgs[0].src="grass.gif"
+imgs[1]=new Image();imgs[1].src="brick.gif"
+imgs[2]=new Image();imgs[2].src="tower.gif"
+imgs[3]=new Image();imgs[3].src="bridge.gif"
+imgs[4]=new Image();imgs[4].src="flag.gif"
+imgs[5]=new Image();imgs[5].src="catapult.gif"
+imgs[6]=new Image();imgs[6].src="archer.gif"
+imgs[7]=new Image();imgs[7].src="pikeman.gif"
+imgs[8]=new Image();imgs[8].src="knight.gif"
+
+
+function buy(n)
+{
+ if (mode==1 ) 
+ {
+  if (gold[turn]>=cost[n])
+  {
+   imgchg(Xpos+Ypos*20,n)
+   gold[turn]=gold[turn]-cost[n]
+  }
+  mode=(1+mode)%2
+ }
+}
+
+function click()
+{
+  mode=(1+mode)%2
+}
+
+function game()
+{
+ parent.scr.document.forms[0].elements[0].value = gold[turn]
+ if (mode==0)
+ {
+  window.scroll(window.event.x*2-300,window.event.y*3-300)
+  Xpos = window.event.x + document.body.scrollLeft-10
+  Ypos = window.event.y + document.body.scrollTop
+  Xpos=(Xpos-Xpos%60)/60
+  if (Xpos%2==1) Ypos=Ypos-35  
+  Ypos=(Ypos-Ypos%70)/70
+  if (Xpos>19) Xpos=19
+  if (Ypos>19) Ypos=19
+
+  parent.scr.document.forms[0].elements[1].value = Xpos
+  parent.scr.document.forms[0].elements[2].value = Ypos
+  move(cur,Xpos*60,Ypos*70+(Xpos%2)*35)
+ }
+
+}
+
+
+function init()
+{
+ for (a=0;a<players;a++)
+  gold[a]=200
+ a=0
+ for(y=0;y<20;y++)
+ {
+  for(x=0;x<20;x++)
+  {
+   n=0
+//   if (x==0 || y==0 || x==19 || y==19) n=1
+   if (x==6 && y==16) n=2
+   if (x==5 && y==16) n=1
+   if (x==7 && y==16) n=1
+   if (x==5 && y==15) n=1
+   if (x==7 && y==15) n=1
+   if (x==6 && y==15) n=3
+   if (x==6 && y==17) n=1
+   if (x==6 && y==13) n=4
+   if (x==3 && y==14) n=4
+   if (x==9 && y==14) n=4
+   if (x==6 && y==11) n=4
+
+
+   if (n==0) spawn(x*60,y*70+(x%2)*35,"grass.gif",a)
+   if (n==1) spawn(x*60,y*70+(x%2)*35,"brick.gif",a)
+   if (n==2) spawn(x*60,y*70+(x%2)*35,"flag.gif",a)
+   if (n==3) spawn(x*60,y*70+(x%2)*35,"bridge.gif",a)
+   if (n==4) spawn(x*60,y*70+(x%2)*35,"tower.gif",a)
+   a=a+1
+  }
+ }
+ spawn(0,0,"hexagon.gif",a)
+ cur=a
+}
+
+//IMAGE CHANGE
+function imgchg(imgNo,dataNo){
+ if (systm!="C"){
+  document.layers[0].layers[imgNo].document.images[0].src=imgs[dataNo].src
+ }else{
+  document.images[imgNo].src=imgs[dataNo].src
+ }
+}
+
+
+//LAYER MOVE
+function move(spNO,spX,spY){
+ if (systm!="C"){
+  document.layers[0].layers[spNO].moveTo(spX,spY)
+ }else{
+  document.images[spNO].style.posLeft = spX
+  document.images[spNO].style.posTop =  spY
+
+ }
+}
+
+
+//LAYER SETUP
+function spawn(spX,spY,spIMG,spno)
+{
+ if (systm!="C")
+ {
+  document.write("<LAYER LEFT="+spX+" TOP="+spY+"><IMG SRC='"+spIMG+"'></LAYER>")
+ }
+ else
+ {
+  with (document) 
+  {
+   write("<IMG SRC='"+spIMG+"' STYLE='position:absolute'>")
+   images[spno].style.posLeft = spX
+   images[spno].style.posTop =  spY
+  }
+ }
+}
+
+//-->
+</SCRIPT>
+
+</head>
+<body bgcolor=#000000 text=#ffffff link=#0080ff ONLOAD=startFLG=0>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+document.onmousemove = game
+document.onclick= click
+init()
+//-->
+</SCRIPT>
+
+
+</body>
+</html>
+
+

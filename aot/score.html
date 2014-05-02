@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<TITLE>No TITLE</TITLE>
+<style>
+body { font-family:Darklands, Arial, Times New Roman; }
+div { position:absolute; }
+</style>
+<style>
+<!--
+#glowtext{
+filter:glow(color=FFFF00,strength=2);
+width:100%;
+}
+-->
+</style>
+
+<script language="JavaScript1.2">
+
+/*
+Glowing Text Script- 
+© Dynamic Drive (www.dynamicdrive.com)
+For full source code, installation instructions,
+100's more DHTML scripts, and Terms Of
+Use, visit dynamicdrive.com
+*/
+
+function glowit(which){
+if (document.all.glowtext[which].filters[0].strength==3)
+document.all.glowtext[which].filters[0].strength=2
+else
+document.all.glowtext[which].filters[0].strength=3
+}
+
+function glowit2(which){
+if (document.all.glowtext.filters[0].strength==3)
+document.all.glowtext.filters[0].strength=2
+else
+document.all.glowtext.filters[0].strength=3
+}
+
+function startglowing(){
+if (document.all.glowtext&&glowtext.length){
+for (i=0;i<glowtext.length;i++)
+eval('setInterval("glowit('+i+')",150)')
+}
+else if (glowtext)
+setInterval("glowit2(0)",150)
+}
+
+if (document.all)
+window.onload=startglowing
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+ systm=""
+ ver=navigator.appVersion
+ Nv=ver.charAt(0)
+ len=ver.length
+ for(iln=0;iln<len;iln++) if(ver.charAt(iln)=="(") break
+ systm = ver.charAt(iln+1).toUpperCase()
+
+function clk(){
+ if (Nv>=4){
+  if (systm == "C"){
+   parent.main.restarter.style.posTop = 100
+   parent.main.document.forms[1].elements[0].click()
+  }else{
+   parent.main.focus()
+  }
+ }
+}
+
+if (Nv>=4){
+ if (systm!="C"){
+  document.onmousedown = clk
+  document.captureEvents(Event.MOUSEDOWN)
+ }
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<body bgcolor="#202020"  bgproperties="fixed" text="#4040ff" link="#0ff00" vlink="#00ff00" alink="#2020ff"  onclick="clk()">
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+//N3 check
+ if (Nv<4){
+  parent.main.location.href="n3.html"
+ }else{
+  parent.main.location.href="aot.html"
+ }
+
+//-->
+</SCRIPT>
+
+<FONT STYLE="font-size:24px" COLOR="#400080"><span id="glowtext">&nbsp AOT IE</span></FONT><h6>(Internet Edition)</h6><P>
+<br>
+<FORM NAME="FORM0">
+SCORE<BR><INPUT TYPE="text" NAME="PY" SIZE=10 VALUE = " " ><P>
+TIME LIMIT<BR><INPUT TYPE="text" NAME="TL" SIZE=10 VALUE = " " ><P>
+</FORM>
+<Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br><Br>
+<!--#wpad--> 
+
+
+</BODY>
+</HTML>
